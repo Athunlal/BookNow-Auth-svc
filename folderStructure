@@ -1,0 +1,44 @@
+bookNow-auth-svc/
+├── cmd/
+│   ├── docs/
+│   │   ├── docs.go
+│   │   ├── swagger.json
+│   │   └── swagger.yaml
+│   └── main.go
+├── docs/
+├── Dockerfile
+├── docker-compose.yml
+├── Makefile
+├── pkg/
+│   ├── api/
+│   │   ├── handler/
+│   │   │   └── userHandler.go
+│   │   ├── middleware/
+│   │   │   └── middleware.go
+│   │   ├── middleware.go
+│   │   └── server.go
+│   ├── config/
+│   │   └── config.go
+│   ├── db/
+│   │   ├── connection.go
+│   │   └── connectGorm.go
+│   ├── di/
+│   │   └── wire.go
+│   ├── domain/
+│   │   ├── jwtClaimsModel.go
+│   │   └── user.go
+│   ├── mock/
+│   ├── repository/
+│   │   ├── interface/
+│   │   │   └── userRepoInterface.go
+│   │   └── userRepository.go
+│   ├── response/
+│   │   └── commonResponse.go
+│   ├── usecase/
+│   │   ├── interface/
+│   │   │   └── userUsecaseInterface.go
+│   │   └── userUsecase.go
+│   └── utils/
+│       └── utils.go
+├── README.md
+└── .gitignore
