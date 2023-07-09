@@ -128,14 +128,38 @@ func (use *userUseCase) ValidateJwtUser(userId uint) (domain.User, error) {
 }
 
 func (use *userUseCase) AdminLogin(user domain.User) (domain.User, error) {
-	userDetatils, err := use.Repo.FindByUserName(user)
-	if err != nil{
-		return userDetatils, errors.New("User not found")
-	}
+	if user.Username != "" {
+		userDetatils, err := use.Repo.FindByUserName(user)
+		if err != nil {
+			return userDetatils, errors.New("User not found")
+		}
 
-	if userDetatils.Isadmin == false{
-		return userDetatils, errors.New("User not found")
-	}
+		if userDetatils.Isadmin == false {
+			return userDetatils, errors.New("User not found")
+		}
 
-	if !=uti
+		if !utils.VerifyPassword(user.Password, userDetatils.Password) {
+			return userDetatils, errors.New("Password in worng or did not match ")
+		}
+		return userDetatils, nil
+	} else if user.Email != "" {
+		userDetails, err := use.Repo.FindByUserEmail(user)
+		if err != nil {
+			return userDetails, errors.New("User not found")
+		}
+		if err != nil {
+			return userDetails, errors.New("User not found")
+		}
+		if !utils.VerifyPassword(user.Password, userDetails.Password) {
+			return userDetails, errors.New("Password in wrong or did not match ")
+		}
+		return userDetails, nil
+	}
+	return user, nil
+}
+
+func NewUserUseCase(repo interfaces.UserRepo) interfaces.UserRepo {
+	return &userUseCase{
+		Repo: repo,
+	}
 }
