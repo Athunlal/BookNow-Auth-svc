@@ -40,12 +40,10 @@ func ValidateToken(signedToken string) (claims *domain.JwtClaims, err error) {
 
 func GenerateToken(user domain.User) (signedToken string, err error) {
 	claims := &domain.JwtClaims{
-		Id:    user.Id,
-		Email: user.Email,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(w.ExpirationHours)).Unix(),
-			Issuer:    w.Issuer,
-		},
+		StandardClaims: jwt.StandardClaims{ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(w.ExpirationHours)).Unix(), Issuer: w.Issuer},
+		Userid:         user.Id,
+		Email:          user.Email,
+		Source:         "",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

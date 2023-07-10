@@ -1,24 +1,21 @@
 package db
 
 import (
-	"log"
+	"fmt"
 
+	"github.com/athunlal/bookNow-auth-svc/pkg/config"
 	"github.com/athunlal/bookNow-auth-svc/pkg/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-type Handler struct {
-	DB *gorm.DB
-}
+func ConnectToDb(cfg config.Config) (*gorm.DB, error) {
+	psqlInfo := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s", cfg.DBHost, cfg.DBUser, cfg.DBName, cfg.DBPort, cfg.DBPassword)
+	DB, dbErr := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
+	DB.AutoMigrate(&domain.User{})
 
-func Init(url string) Handler {
-	db, err := gorm.Open(postgres.Open(url), &gorm.Config{})
-	if err != nil {
-		log.Fatal(err)
-	}
+	return DB, dbErr
 
-	db.AutoMigrate(&domain.User{})
-
-	return Handler{db}
 }

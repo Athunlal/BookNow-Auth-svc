@@ -5,6 +5,7 @@ import (
 
 	"github.com/athunlal/bookNow-auth-svc/pkg/domain"
 	interfaces "github.com/athunlal/bookNow-auth-svc/pkg/repository/interface"
+	userCase "github.com/athunlal/bookNow-auth-svc/pkg/usecase/interface"
 	"github.com/athunlal/bookNow-auth-svc/pkg/utils"
 )
 
@@ -158,7 +159,7 @@ func (use *userUseCase) AdminLogin(user domain.User) (domain.User, error) {
 	return user, nil
 }
 
-func NewUserUseCase(repo interfaces.UserRepo) interfaces.UserRepo {
+func NewUserUseCase(repo interfaces.UserRepo) userCase.UserUseCase {
 	return &userUseCase{
 		Repo: repo,
 	}
