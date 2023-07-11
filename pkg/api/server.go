@@ -25,7 +25,6 @@ func NewGrpcServer(userHandler *handler.UserHandler, grpcPort string) {
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalln("Could not serve the GRPC Server: ", err)
 	}
-
 }
 
 func NewServerHttp(userHandler *handler.UserHandler) *ServerHttp {
