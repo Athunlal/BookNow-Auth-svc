@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/athunlal/bookNow-auth-svc/pkg/domain"
@@ -21,6 +22,16 @@ func NewUserHandler(useCase interfaces.UserUseCase, jwtUserCase interfaces.JwtUs
 		UseCase:    useCase,
 		jwtUseCase: jwtUserCase,
 	}
+}
+
+func (h *UserHandler) Test(ctx context.Context, req *pb.TestRequest) (*pb.TestResponse, error) {
+	test := domain.Test{
+		Testname: req.Testname,
+	}
+	fmt.Println("This is the Test name :----------->>>>", test.Testname)
+	return &pb.TestResponse{
+		Testreturn: "This is the respose" + req.Testname,
+	}, nil
 }
 
 func (h *UserHandler) Register(ctx context.Context, req *pb.RegisterRequest) (*pb.RegisterResponse, error) {

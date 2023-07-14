@@ -12,3 +12,7 @@ type User struct {
 	Dateofbirth string `json:"dateofbirth"`
 	Gender      string `json:"gender"`
 }
+
+type Test struct {
+	Testname string
+}

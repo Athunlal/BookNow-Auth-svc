@@ -3,3 +3,6 @@ proto:
 
 path:
 	export PATH="$PATH:$(go env GOPATH)/bin"
+
+run:
+	go run cmd/api/main.go
