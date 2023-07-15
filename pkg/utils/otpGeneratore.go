@@ -24,6 +24,7 @@ func GenCaptchaCode() (string, error) {
 }
 
 func Otpgeneration(emails string) string {
+
 	m := gomail.NewMessage()
 
 	// Set E-Mail sender
@@ -42,7 +43,7 @@ func Otpgeneration(emails string) string {
 	}
 
 	// Set E-Mail body. You can set plain text or html with text/html
-	m.SetBody("text/plain", onetimepassword+" is your OTP to register to our site. Thank you registering to our site. Happy Shopping :)")
+	m.SetBody("text/plain", onetimepassword+" is your OTP to register to BookNow. Thank you registering to our site. Dont't give this code to anyone")
 
 	// Settings for SMTP server
 	d := gomail.NewDialer("smtp.gmail.com", 587, os.Getenv("EMAIL"), os.Getenv("PASSWORD"))

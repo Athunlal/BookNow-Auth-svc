@@ -14,6 +14,7 @@ type userUseCase struct {
 }
 
 func (use *userUseCase) Register(user domain.User) error {
+
 	validationError := utils.ValidateUser(user)
 	if validationError != nil {
 		return validationError
@@ -112,7 +113,7 @@ func (use *userUseCase) ForgotPassword(user domain.User) error {
 }
 
 func (use *userUseCase) ChangePassword(user domain.User) error {
-	user.Password = utils.HashPassword(user.Password)
+	// user.Password = utils.HashPassword(user.Password)
 	err := use.Repo.ChangePassword(user)
 	if err != nil {
 		return errors.New("Could not change the password")

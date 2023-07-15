@@ -10,6 +10,12 @@ type userDatabase struct {
 	DB *gorm.DB
 }
 
+func NewUserRepo(db *gorm.DB) interfaces.UserRepo {
+	return &userDatabase{
+		DB: db,
+	}
+}
+
 func (r *userDatabase) FindByUserName(user domain.User) (domain.User, error) {
 	result := r.DB.First(&user, "username LIKE ?", user.Username).Error
 	return user, result
@@ -19,6 +25,7 @@ func (r *userDatabase) FindByUserEmail(user domain.User) (domain.User, error) {
 	return user, result
 }
 func (r *userDatabase) Create(user domain.User) error {
+
 	result := r.DB.Create(&user).Error
 	return result
 }
@@ -60,12 +67,6 @@ func (r *userDatabase) VerifyUser(user domain.User) (domain.User, error) {
 }
 
 func (r *userDatabase) ChangePassword(user domain.User) error {
-	result := r.DB.Model(&user).Where("id = ?", user.Id).Update("password", user.Password)
+	result := r.DB.Model(&user).Where("id = ?", 1).Update("password", user.Password)
 	return result.Error
-}
-
-func NewUserRepo(db *gorm.DB) interfaces.UserRepo {
-	return &userDatabase{
-		DB: db,
-	}
 }
