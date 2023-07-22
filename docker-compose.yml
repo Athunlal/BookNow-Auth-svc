@@ -17,14 +17,11 @@ services:
 
   app:
     build: .
-    image: authsvc:latest
-    container_name: application 
+    image: auth-svc:latest
+    container_name: auth-svc-container
     ports:
       - "7777:7777"
     restart: always
-    depends_on:
-      - db
-      - api
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "athun123"
@@ -32,11 +29,11 @@ services:
       POSTGRES_HOST: "db"
     networks:
       - servicenetwork
-  
+
   api:
     build: .
     image: apigateway:latest
-    container_name: apigate 
+    container_name: apigate-container
     ports:
       - "8000:8000"
     restart: always

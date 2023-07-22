@@ -24,5 +24,3 @@ func InitApi(cfg config.Config) (*http.ServerHttp, error) {
 
 	return &http.ServerHttp{}, nil
 }
-
-//go run github.com/google/wire/cmd/wire
