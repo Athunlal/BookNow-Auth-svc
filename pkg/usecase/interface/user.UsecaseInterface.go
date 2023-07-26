@@ -7,7 +7,6 @@ type UserUseCase interface {
 	RegisterValidate(user domain.User) (domain.User, error)
 	Login(user domain.User) (domain.User, error)
 	ValidateJwtUser(userid uint) (domain.User, error)
-	AdminLogin(user domain.User) (domain.User, error)
 	ForgotPassword(user domain.User) error
 	ChangePassword(user domain.User) error
 }

@@ -14,6 +14,19 @@ type jwtUseCase struct {
 	SecretKey string
 }
 
+func (u *jwtUseCase) GenerateRefreshToken(userid int, email string, role string) (string, error) {
+
+	refreshTokenExpiresAt := time.Now().Add(time.Hour * 24 * 7).Unix() // Refresh token expires in 7 days
+	refreshTokenClaims := jwt.MapClaims{
+		"exp":  refreshTokenExpiresAt,
+		"sub":  userid,
+		"type": "refresh",
+	}
+	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshTokenClaims)
+	refreshTokenString, err := refreshToken.SignedString([]byte(u.SecretKey))
+	return refreshTokenString, err
+}
+
 func (u *jwtUseCase) GenerateAccessToken(userid int, email string, role string) (string, error) {
 	claims := domain.JwtClaims{
 		Userid: uint(userid),

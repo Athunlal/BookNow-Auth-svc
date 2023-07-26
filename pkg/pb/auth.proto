@@ -55,6 +55,7 @@ message LoginResponse{
   int64 status = 1;
   string error = 2;
   string accesstoken =3;
+  string refreshToken = 4;
 }
 
 //Validate

@@ -16,10 +16,10 @@ type UserHandler struct {
 	pb.AuthServiceServer
 }
 
-func NewUserHandler(useCase interfaces.UserUseCase, jwtUserCase interfaces.JwtUseCase) *UserHandler {
+func NewUserHandler(useCase interfaces.UserUseCase, jwtUseCase interfaces.JwtUseCase) *UserHandler {
 	return &UserHandler{
 		UseCase:    useCase,
-		jwtUseCase: jwtUserCase,
+		jwtUseCase: jwtUseCase,
 	}
 }
 
@@ -83,9 +83,19 @@ func (h *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Logi
 			Error:  "Error in Generating JWT token",
 		}, err
 	}
+
+	refreshToken, err := h.jwtUseCase.GenerateRefreshToken(int(userDetails.Id), userDetails.Email, "user")
+	if err != nil {
+		return &pb.LoginResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  "Error in Generating JWT token",
+		}, err
+	}
+
 	return &pb.LoginResponse{
-		Status:      http.StatusOK,
-		Accesstoken: accessToken,
+		Status:       http.StatusOK,
+		Accesstoken:  accessToken,
+		RefreshToken: refreshToken,
 	}, nil
 }
 
@@ -146,34 +156,6 @@ func (u *UserHandler) Validate(ctx context.Context, req *pb.ValidateRequest) (*p
 		Status: http.StatusOK,
 		Userid: int64(userData.Id),
 		Source: claims.Source,
-	}, nil
-
-}
-
-//  Amdmin Authentication
-func (h *UserHandler) AdminLogin(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
-	user := domain.User{
-		Username: req.Username,
-		Password: req.Password,
-	}
-	userData, err := h.UseCase.AdminLogin(user)
-	if err != nil {
-		return &pb.LoginResponse{
-			Status: http.StatusNotFound,
-			Error:  "Error in Admin Login",
-		}, err
-	}
-	accessToken, err := h.jwtUseCase.GenerateAccessToken(int(userData.Id), userData.Email, "admin")
-	if err != nil {
-		return &pb.LoginResponse{
-			Status: http.StatusUnprocessableEntity,
-			Error:  "Error in Generating JWT token",
-		}, err
-	}
-
-	return &pb.LoginResponse{
-		Status:      http.StatusOK,
-		Accesstoken: accessToken,
 	}, nil
 
 }
