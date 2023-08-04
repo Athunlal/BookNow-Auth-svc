@@ -133,7 +133,6 @@ func (u *UserHandler) ChangePassword(ctx context.Context, req *pb.ChangePassword
 }
 
 //Jwt Validation
-
 func (u *UserHandler) Validate(ctx context.Context, req *pb.ValidateRequest) (*pb.ValidateResponse, error) {
 	userData := domain.User{}
 	ok, claims := u.jwtUseCase.VerifyToken(req.Accesstoken)
