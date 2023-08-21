@@ -56,7 +56,6 @@ func (u *jwtUseCase) VerifyToken(token string) (bool, *domain.JwtClaims) {
 		}
 	}
 	return true, claims
-
 }
 
 func (u *jwtUseCase) GetTokenFromString(signedToken string, claims *domain.JwtClaims) (*jwt.Token, error) {
