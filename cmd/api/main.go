@@ -18,5 +18,4 @@ func main() {
 		log.Fatalln("Error in initializing the api", err)
 	}
 	server.Start()
-
 }

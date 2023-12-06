@@ -31,6 +31,7 @@ func (h *UserHandler) Register(ctx context.Context, req *pb.RegisterRequest) (*p
 		Phone:    req.Phone,
 	}
 	err := h.UseCase.Register(user)
+
 	if err != nil {
 		return &pb.RegisterResponse{
 			Status: http.StatusUnprocessableEntity,

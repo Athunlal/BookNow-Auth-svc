@@ -14,4 +14,5 @@ type UserRepo interface {
 	UpdateOtp(user domain.User) error
 	VerifyUser(user domain.User) (domain.User, error)
 	ChangePassword(user domain.User) error
+	
 }
