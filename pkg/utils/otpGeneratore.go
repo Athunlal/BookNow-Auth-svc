@@ -24,35 +24,24 @@ func GenCaptchaCode() (string, error) {
 }
 
 func Otpgeneration(emails string) string {
-
 	m := gomail.NewMessage()
 
-	// Set E-Mail sender
 	m.SetHeader("From", os.Getenv("EMAIL"))
 
-	// Set E-Mail receivers
 	m.SetHeader("To", emails)
 
-	// Set E-Mail subject
 	m.SetHeader("Subject", "OTP to verify your Gmail")
 
-	//otp generation
 	onetimepassword, err := GenCaptchaCode()
 	if err != nil {
 		panic(err)
 	}
 
-	// Set E-Mail body. You can set plain text or html with text/html
 	m.SetBody("text/plain", onetimepassword+" is your OTP to register to BookNow. Thank you registering to our site. Dont't give this code to anyone")
 
-	// Settings for SMTP server
 	d := gomail.NewDialer("smtp.gmail.com", 587, os.Getenv("EMAIL"), os.Getenv("PASSWORD"))
-
-	// This is only needed when SSL/TLS certificate is not valid on server.
-	// In production this should be set to false.
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
-	// Now send E-Mail
 	if err := d.DialAndSend(m); err != nil {
 		fmt.Println(err)
 		panic(err)

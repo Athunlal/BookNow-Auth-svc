@@ -7,11 +7,14 @@
 package di
 
 import (
+	"github.com/athunlal/bookNow-auth-svc/pkg/repository"
 	"github.com/athunlal/bookNow-auth-svc/pkg/api"
 	"github.com/athunlal/bookNow-auth-svc/pkg/api/handler"
 	"github.com/athunlal/bookNow-auth-svc/pkg/config"
 	"github.com/athunlal/bookNow-auth-svc/pkg/db"
-	"github.com/athunlal/bookNow-auth-svc/pkg/repository"
+
+	// "github.com/athunlal/bookNow-auth-svc/pkg/repository"
+
 	"github.com/athunlal/bookNow-auth-svc/pkg/usecase"
 )
 
